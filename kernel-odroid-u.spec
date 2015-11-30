@@ -1,4 +1,4 @@
-%global commit 1130f8761789bfe79de0db2b7f5013ff3eb1f978
+%global commit ddfddf829693c6bb739074e1b14e9e4fa1c55ea8
 %define variant -odroid-u
 %define _without_pae 1
 
@@ -30,7 +30,7 @@ Summary: The Linux kernel
 # For non-released -rc kernels, this will be appended after the rcX and
 # gitX tags, so a 3 here would become part of release "0.rcX.gitX.3"
 #
-%global baserelease 6
+%global baserelease 8
 %global fedora_build %{baserelease}
 
 # base_sublevel is the kernel version we're starting with and patching
@@ -406,7 +406,6 @@ Patch26121: Set-UID-in-sess_auth_rawntlmssp_authenticate-too.patch
 #rhbz 1163574
 Patch26130: acpi-video-Add-disable_native_backlight-quirk-for-De.patch
 
-Patch80100: gcc5.patch
 Patch80101: arm-LLVMLinux-use-static-inline-in-ARM-ftrace_h.patch
 
 # END OF PATCH DEFINITIONS
@@ -463,13 +462,6 @@ Requires: gzip binutils
 Kernel-bootwrapper contains the wrapper code which makes bootable "zImage"
 files combining both kernel and initial ramdisk.
 
-%package debuginfo-common-%{_target_cpu}
-Summary: Kernel source files used by %{name}-debuginfo packages
-Group: Development/Debug
-%description debuginfo-common-%{_target_cpu}
-This package is required by %{name}-debuginfo subpackages.
-It provides the kernel source files common to all builds.
-
 %if %{with_perf}
 %package -n perf
 Summary: Performance monitoring for the Linux kernel
@@ -482,7 +474,6 @@ of the Linux kernel.
 %package -n perf-debuginfo
 Summary: Debug information for package perf
 Group: Development/Debug
-Requires: %{name}-debuginfo-common-%{_target_cpu} = %{version}-%{release}
 AutoReqProv: no
 %description -n perf-debuginfo
 This package provides debug information for the perf package.
@@ -506,7 +497,6 @@ to manipulate perf events.
 %package -n python-perf-debuginfo
 Summary: Debug information for package perf python bindings
 Group: Development/Debug
-Requires: %{name}-debuginfo-common-%{_target_cpu} = %{version}-%{release}
 AutoReqProv: no
 %description -n python-perf-debuginfo
 This package provides debug information for the perf python bindings.
@@ -558,7 +548,6 @@ the kernel source.
 %package -n kernel-tools-debuginfo
 Summary: Debug information for package kernel-tools
 Group: Development/Debug
-Requires: %{name}-debuginfo-common-%{_target_cpu} = %{version}-%{release}
 AutoReqProv: no
 %description -n kernel-tools-debuginfo
 This package provides debug information for package kernel-tools.
@@ -580,7 +569,6 @@ This package provides debug information for package kernel-tools.
 %package %{?1:%{1}-}debuginfo\
 Summary: Debug information for package %{name}%{?1:-%{1}}\
 Group: Development/Debug\
-Requires: %{name}-debuginfo-common-%{_target_cpu} = %{version}-%{release}\
 Provides: %{name}%{?1:-%{1}}-debuginfo-%{_target_cpu} = %{version}-%{release}\
 AutoReqProv: no\
 %description -n %{name}%{?1:-%{1}}-debuginfo\
@@ -1069,7 +1057,6 @@ ApplyPatch Set-UID-in-sess_auth_rawntlmssp_authenticate-too.patch
 #rhbz 1163574
 ApplyPatch acpi-video-Add-disable_native_backlight-quirk-for-De.patch
 
-ApplyPatch gcc5.patch
 ApplyPatch arm-LLVMLinux-use-static-inline-in-ARM-ftrace_h.patch
 
 # END OF PATCH APPLICATIONS
@@ -1502,8 +1489,6 @@ popd
 
 %ifnarch noarch
 %global __debug_package 1
-%files -f debugfiles.list debuginfo-common-%{_target_cpu}
-%defattr(-,root,root)
 %endif
 
 %endif
@@ -1847,6 +1832,10 @@ fi
 #                                    ||----w |
 #                                    ||     ||
 %changelog
+* Sun Nov 29 2015 Scott K Logan <logans@cottsay.net> - 3.8.13.30-8
+- Update to version 3.8.13.30-8
+- Remove debuginfo-common package because it is empty
+
 * Sun Jul 19 2015 Scott K Logan <logans@cottsay.net> - 3.8.13.30-6
 - Adapted kernel RPM from Fedora's kernel-3.18.5-201
 ###

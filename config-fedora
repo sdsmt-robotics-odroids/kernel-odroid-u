@@ -9,8 +9,3 @@ CONFIG_RT_GROUP_SCHED=y
 
 # Disabled due to depmod warnings
 # CONFIG_USB_MIDI_GADGET is not set
-
-# Disabled due to gcc5 errors
-# CONFIG_R8712U is not set
-# CONFIG_RTL8192CU_V40 is not set
-# CONFIG_RTL8812AU is not set
