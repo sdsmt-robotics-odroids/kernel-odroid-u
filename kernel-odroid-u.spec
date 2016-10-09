@@ -30,7 +30,7 @@ Summary: The Linux kernel
 # For non-released -rc kernels, this will be appended after the rcX and
 # gitX tags, so a 3 here would become part of release "0.rcX.gitX.3"
 #
-%global baserelease 8
+%global baserelease 9
 %global fedora_build %{baserelease}
 
 # base_sublevel is the kernel version we're starting with and patching
@@ -407,6 +407,8 @@ Patch26121: Set-UID-in-sess_auth_rawntlmssp_authenticate-too.patch
 Patch26130: acpi-video-Add-disable_native_backlight-quirk-for-De.patch
 
 Patch80101: arm-LLVMLinux-use-static-inline-in-ARM-ftrace_h.patch
+
+Patch80102: gcc6.patch
 
 # END OF PATCH DEFINITIONS
 
@@ -1058,6 +1060,7 @@ ApplyPatch Set-UID-in-sess_auth_rawntlmssp_authenticate-too.patch
 ApplyPatch acpi-video-Add-disable_native_backlight-quirk-for-De.patch
 
 ApplyPatch arm-LLVMLinux-use-static-inline-in-ARM-ftrace_h.patch
+ApplyPatch gcc6.patch
 
 # END OF PATCH APPLICATIONS
 
@@ -1832,6 +1835,9 @@ fi
 #                                    ||----w |
 #                                    ||     ||
 %changelog
+* Sat Oct 08 2016 Scott K Logan <logans@cottsay.net> - 3.8.13.30-9
+- Add gcc6.patch
+
 * Sun Nov 29 2015 Scott K Logan <logans@cottsay.net> - 3.8.13.30-8
 - Update to version 3.8.13.30-8
 - Remove debuginfo-common package because it is empty
